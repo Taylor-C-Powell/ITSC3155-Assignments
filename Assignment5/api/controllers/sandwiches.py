@@ -20,11 +20,11 @@ def create(db: Session, sandwich):
 
 
 def read_all(db: Session):
-    return db.query(models.Order).all()
+    return db.query(models.Sandwich).all()
 
 
-def read_one(db: Session, order_id):
-    return db.query(models.Order).filter(models.Order.id == order_id).first()
+def read_one(db: Session, sandwich_id):
+    return db.query(models.Sandwich).filter(models.Sandwich.id == sandwich_id).first()
 
 
 def update(db: Session, order_id, order):
