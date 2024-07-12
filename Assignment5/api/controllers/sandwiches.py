@@ -3,20 +3,20 @@ from fastapi import HTTPException, status, Response, Depends
 from ..models import models, schemas
 
 
-def create(db: Session, order):
+def create(db: Session, sandwich):
     # Create a new instance of the Order model with the provided data
-    db_order = models.Order(
-        customer_name=order.customer_name,
-        description=order.description
+    db_sandwich = models.Sandwich(
+        sandwich_name=sandwich.sandwich_name,
+        price=sandwich.price
     )
     # Add the newly created Order object to the database session
-    db.add(db_order)
+    db.add(db_sandwich)
     # Commit the changes to the database
     db.commit()
     # Refresh the Order object to ensure it reflects the current state in the database
-    db.refresh(db_order)
+    db.refresh(db_sandwich)
     # Return the newly created Order object
-    return db_order
+    return db_sandwich
 
 
 def read_all(db: Session):
