@@ -57,12 +57,17 @@ def delete_one_order(order_id: int, db: Session = Depends(get_db)):
 
 
 # Sandwiches
+@app.post("/sandwiches/", response_model=schemas.Sandwich, tags=["Sandwiches"])
+def create_sandwich(sandwich: schemas.SandwichCreate, db: Session = Depends(get_db)):
+    return sandwiches.create(db=db, sandwich=sandwich)
+
+
 @app.get("/sandwiches/", response_model=list[schemas.Sandwich], tags=["Sandwiches"])
 def read_sandwiches(db: Session = Depends(get_db)):
     return sandwiches.read_all(db)
 
 
-@app.get("/sandwiches/{sandwich_id}", response_model=schemas.Sandwich, tags=["Sandwich"])
+@app.get("/sandwiches/{sandwich_id}", response_model=schemas.Sandwich, tags=["Sandwiches"])
 def read_one_sandwich(sandwich_id: int, db: Session = Depends(get_db)):
     sandwich = sandwiches.read_one(db, sandwich_id=sandwich_id)
     if sandwich is None:
@@ -70,7 +75,7 @@ def read_one_sandwich(sandwich_id: int, db: Session = Depends(get_db)):
     return sandwich
 
 
-@app.put("/sandwiches/{sandwich_id}", response_model=schemas.Sandwich, tags=["Sandwich"])
+@app.put("/sandwiches/{sandwich_id}", response_model=schemas.Sandwich, tags=["Sandwiches"])
 def update_one_sandwich(sandwich_id: int, sandwich: schemas.SandwichUpdate, db: Session = Depends(get_db)):
     sandwich_db = sandwich.read_one(db, sandwich_id=sandwich_id)
     if sandwich_db is None:
